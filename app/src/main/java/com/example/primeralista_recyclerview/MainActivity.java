@@ -5,11 +5,12 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements PeliculaAdapter.InformarSeleccion {
 
     private RecyclerView recyclerView;
 
@@ -36,17 +37,17 @@ public class MainActivity extends AppCompatActivity {
         peliculas.add(new Pelicula("Second", "Drama", R.drawable.second));
         peliculas.add(new Pelicula("The Good Doctor", "Drama", R.drawable.thegoogdoctor));
 
-
-
-
-
-
-
-        PeliculaAdapter peliculaAdapter = new PeliculaAdapter(peliculas);
+        PeliculaAdapter peliculaAdapter = new PeliculaAdapter(peliculas, this);
         recyclerView.setAdapter(peliculaAdapter);
 
 
 
+
+    }
+
+    @Override
+    public void informarSeleccion(Pelicula pelicula) {
+        Toast.makeText(this, "Hicieron click en "+pelicula.getTituloPelicula(), Toast.LENGTH_SHORT).show();
 
     }
 }

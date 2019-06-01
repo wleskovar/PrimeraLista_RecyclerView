@@ -13,9 +13,12 @@ import java.util.List;
 public class PeliculaAdapter extends RecyclerView.Adapter {
 
     private List<Pelicula> listaPeliculas;
+    private InformarSeleccion objetoInformarSeleccion;
 
-    public PeliculaAdapter(List<Pelicula> listaPeliculas){
+    public PeliculaAdapter(List<Pelicula> listaPeliculas, InformarSeleccion objetoInformarSeleccion){
+
         this.listaPeliculas = listaPeliculas;
+        this.objetoInformarSeleccion = objetoInformarSeleccion;
     }
 
 
@@ -48,11 +51,18 @@ public class PeliculaAdapter extends RecyclerView.Adapter {
         private TextView generoPelicula;
         private Pelicula peliculaDelItem;
 
-        public PeliculaViewHolder(@NonNull View itemView) {
+        public PeliculaViewHolder(@NonNull final View itemView) {
             super(itemView);
             imagenListaItem = itemView.findViewById(R.id.imagenListaItems);
             tituloPelicula = itemView.findViewById(R.id.tituloItemTextView);
             generoPelicula = itemView.findViewById(R.id.generoItemTextView);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    objetoInformarSeleccion.informarSeleccion(listaPeliculas.get(getAdapterPosition()));
+
+                }
+            });
         }
 
         public void bindPelicula (Pelicula peliculaDelItem) {
@@ -61,8 +71,10 @@ public class PeliculaAdapter extends RecyclerView.Adapter {
             this.generoPelicula.setText(this.peliculaDelItem.getGeneroPelicula());
             this.imagenListaItem.setImageResource(this.peliculaDelItem.getImagenPelicula());
         }
+    }
 
-
+    public interface InformarSeleccion {
+        public void informarSeleccion(Pelicula pelicula);
     }
 
 
